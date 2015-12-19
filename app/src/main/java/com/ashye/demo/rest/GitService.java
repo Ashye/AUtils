@@ -105,8 +105,6 @@ public class GitService extends BaseApi {
     private static class GitApiConverter extends BaseConverter<Map, JSONObject> {
         @Override
         protected JSONObject convertResponseBody(String body) {
-//            JSONObject bean = JSON.parseObject(body, GitApiBean.class);
-//            return bean;
             return JSON.parseObject(body);
         }
 

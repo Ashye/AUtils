@@ -6,6 +6,7 @@ import com.ashye.rest.converter.StringConverter;
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Query;
+import retrofit.http.Url;
 
 /**
  * Created by Administrator on 2015/12/16.
@@ -19,6 +20,13 @@ public class SearchService extends BaseApi {
         @GET("/baidu")
         Call<String> search(@Query("kw") String key);
     }
+
+
+    private interface EchoApi {
+        @GET
+        Call<String> echo(@Url String url);
+    }
+
 
     /**
      * 2. 初始化，并设置解析器
@@ -34,6 +42,9 @@ public class SearchService extends BaseApi {
         this.listener = listener;
     }
 
+    public void setListener(ResultListener<String> listener) {
+        this.listener = listener;
+    }
 
     /**
      * 3. 获取接口实例，并请求
@@ -43,6 +54,13 @@ public class SearchService extends BaseApi {
     public void search(String key, final ResultListener<String> listener) {
         SearchApi searchApi = getService(SearchApi.class);
         Call<String> call = searchApi.search(key);
+        this.listener = listener;
+        call.enqueue(new CallResultWrapper<String>(this.listener));
+    }
+
+    public void echo(ResultListener<String> listener) {
+        EchoApi echoApi = getService(EchoApi.class);
+        Call<String> call = echoApi.echo("http://www.playaround.tk/echo");
         this.listener = listener;
         call.enqueue(new CallResultWrapper<String>(this.listener));
     }

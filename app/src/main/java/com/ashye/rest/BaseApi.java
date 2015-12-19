@@ -22,7 +22,7 @@ public abstract class BaseApi {
 
     private Retrofit retrofit;
     private static final String defaultAPI = "http://www.baidu.com";
-
+//    private static final String defaultAPI = "http://www.playaround.tk";
 
     private static final String[] headerName = new String[]{
             "User-Agent",
@@ -121,7 +121,7 @@ public abstract class BaseApi {
             setResult(false, null, t.getMessage());
         }
 
-        private void setResult(boolean isSuccess, T t, String error) {
+        protected void setResult(boolean isSuccess, T t, String error) {
             if (listener != null) {
                 if (isSuccess) {
                     listener.onSuccess(t);
